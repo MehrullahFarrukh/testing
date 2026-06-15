@@ -1,0 +1,24 @@
+name: Deploy PHP Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Clean old files
+        shell: powershell
+        run: |
+          Remove-Item "C:\xampp\htdocs\chai-o-sip\*" -Recurse -Force -ErrorAction SilentlyContinue
+
+      - name: Copy new files
+        shell: powershell
+        run: |
+          Copy-Item -Path "*" -Destination "C:\xampp\htdocs\chai-o-sip" -Recurse -Force
